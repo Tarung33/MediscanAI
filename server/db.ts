@@ -1,4 +1,4 @@
-import 'dotenv/config';
+ import 'dotenv/config';
 import mongoose from "mongoose";
 
 // ensure env loaded (dotenv/config above) so scripts that import this file directly
@@ -14,16 +14,11 @@ export async function connectDb() {
   await mongoose.connect(uri as string, {
     serverSelectionTimeoutMS: 30000, // Increase server selection timeout to 30 seconds
     socketTimeoutMS: 45000, // Increase socket timeout to 45 seconds
-    bufferCommands: false, // Disable mongoose buffering
+    bufferCommands: true, // Enable mongoose buffering
   });
   return mongoose.connection;
 }
 
-connectDb().then(() => {
-  console.log("MongoDB connected");
-}).catch((err) => {
-  console.error("MongoDB connection error:", err);
-  process.exit(1);
-});
+// Remove the auto-connect on import
 
 export const db = mongoose.connection;

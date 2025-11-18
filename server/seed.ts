@@ -1,4 +1,4 @@
-import "./db"; // ensure DB connected
+import { connectDb } from "./db"; // ensure DB connected
 import bcrypt from "bcryptjs";
 import {
   Hospitals,
@@ -11,6 +11,7 @@ import {
 
 async function seed() {
   try {
+    await connectDb();
     console.log("🌱 Starting database seed...");
 
     // Clear existing data

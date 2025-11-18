@@ -3,6 +3,7 @@ dotenv.config();
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import { connectDb } from "./db";
 const app = express();
 
 
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
 });
 
 (async () => {
+  await connectDb();
   const server = await registerRoutes(app);
 
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
@@ -85,6 +87,6 @@ app.use((req, res, next) => {
   }
 
   server.listen(listenOptions, () => {
-    log(`serving on port ${port}`);
+    log(`serving on http://localhost:${port}`);
   });
 })();

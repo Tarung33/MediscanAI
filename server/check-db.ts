@@ -1,9 +1,10 @@
-import "./db"; // connects using MONGODB_URI
+import { connectDb } from "./db"; // connects using MONGODB_URI
 import { db } from "./db";
 import { Hospitals, Doctors, Patients, HealthRecords, Users, DoctorNotes } from "../shared/schema";
 
 async function check() {
   try {
+    await connectDb();
     console.log("Checking MongoDB collections...");
     const counts = await Promise.all([
       Hospitals.countDocuments(),
